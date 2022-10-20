@@ -1,0 +1,20 @@
+{% extends "scanner/base.html" %}
+
+{% block content %}
+<div class="container-lg">
+    <div class="row row-cols-1 row-cols-md-1 g-3">
+        {% for item in parts %}
+        {% if user.id == item.user.pk %}
+        <div class="card">
+            <h5 class="card-header">{{ item.order_id.part_name }}</h5>
+            <div class="card-body">
+                <p class="card-text">{{ item.order_id.content }}</p>
+                <a href="{% url 'delete' item.pk %}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

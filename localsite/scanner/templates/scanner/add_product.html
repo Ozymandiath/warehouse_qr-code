@@ -1,0 +1,61 @@
+{% extends "scanner/base.html" %}
+{% block content %}
+{% if not user.is_authenticated or user.is_authenticated and not user.is_staff %}
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="alert alert-info" role="alert">
+            <h1>Страница отображается только пользователям с правами администратора</h1>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="border border-3 border-primary"></div>
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body p-5">
+                        {% if messages %}
+                        <ul class="alert alert-success text-center">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form class="mb-3 mt-md-4" method="post" action="{% url 'add' %}">
+                            {% csrf_token %}
+                            <h2 class="fw-bold mb-4 text-uppercase text-center">Добавление товара</h2>
+                            <div class="mb-3">
+                                <label class="form-label ">{{ form.part_name.label_tag }}</label>
+                                {{ form.part_name }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label ">{{ form.content.label_tag }}</label>
+                                {{ form.content }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label ">{{ form.link.label_tag }}</label>
+                                {{ form.link }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label ">{{ form.photo.label_tag }}</label>
+                                {{ form.photo }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label ">{{ form.availability.label_tag }}</label>
+                                {{ form.availability }}
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark" type="submit">Сохранить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "scanner/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="col">
+        <div class="card img-center">
+            <img src="{% static part.photo %}" class="img-responsive rounded mx-auto d-block" alt="Не найдено">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">{{ part.part_name }}</h3>
+                <hr>
+                <p class="ms-4">Количество: {{ part.availability }}</p>
+                <hr>
+                <p class="card-text ms-4">{{ part.content }}</p>
+                {% if user.is_authenticated %}
+                <hr>
+                <div class="card-body text-center">
+                    {% if part.availability <= 0 %}
+                    <a href="{% url 'orderadd' part.pk user.id %}"
+                       class="btn btn-primary disabled" aria-disabled="true">Добавить</a>
+                    {% else %}
+                    <a href="{% url 'orderadd' part.pk user.id %}" class="btn btn-primary">Добавить</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
